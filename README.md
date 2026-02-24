@@ -21,23 +21,23 @@ Shows your current IP address and country flag right in the menu bar.
 ## Installation
 
 ```bash
-# Clone the repo
 git clone git@github.com:adw0rd/ProxyRumps.git
 cd ProxyRumps
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+./install.sh
 ```
+
+This will:
+- Create a virtual environment and install dependencies
+- Add `ProxyRumps.app` to `~/Applications/` (launchable from Spotlight)
+- Install a LaunchAgent to auto-start on login
 
 ## Usage
 
+Launch **ProxyRumps** from Spotlight, or run manually:
+
 ```bash
-source venv/bin/activate
-python socks_toggle.py
+cd ProxyRumps
+venv/bin/python socks_toggle.py
 ```
 
 The app will appear in your menu bar with a flag and IP address.
@@ -47,25 +47,12 @@ The app will appear in your menu bar with a flag and IP address.
 - **Status** — show detailed IP information
 - **Reload** — restart the app
 
-## Run at Login
-
-To start ProxyRumps automatically when you log in, install the LaunchAgent:
-
-```bash
-cp dev.adw0rd.proxyrumps.plist ~/Library/LaunchAgents/
-```
-
-Then either log out and back in, or load it manually:
-
-```bash
-launchctl load ~/Library/LaunchAgents/dev.adw0rd.proxyrumps.plist
-```
-
-To stop and remove:
+## Uninstall
 
 ```bash
 launchctl unload ~/Library/LaunchAgents/dev.adw0rd.proxyrumps.plist
 rm ~/Library/LaunchAgents/dev.adw0rd.proxyrumps.plist
+rm -rf ~/Applications/ProxyRumps.app
 ```
 
 ## Configuration
