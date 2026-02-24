@@ -16,6 +16,7 @@ Shows your current IP address and country flag right in the menu bar.
 
 - macOS
 - Python 3.9+
+- [uv](https://docs.astral.sh/uv/)
 - SOCKS proxy running on `localhost:8888` (e.g. SSH tunnel, Shadowsocks, etc.)
 
 ## Installation
@@ -37,7 +38,7 @@ Launch **ProxyRumps** from Spotlight, or run manually:
 
 ```bash
 cd ProxyRumps
-venv/bin/python socks_toggle.py
+uv run app.py
 ```
 
 The app will appear in your menu bar with a flag and IP address.
@@ -57,7 +58,7 @@ rm -rf ~/Applications/ProxyRumps.app
 
 ## Configuration
 
-Edit the constants at the top of `socks_toggle.py`:
+Edit the constants at the top of `app.py`:
 
 | Variable | Default | Description |
 |---|---|---|

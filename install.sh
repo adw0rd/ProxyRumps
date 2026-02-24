@@ -5,8 +5,8 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_DIR="$HOME/Applications/ProxyRumps.app"
 
 echo "Setting up venv..."
-python3 -m venv "$PROJECT_DIR/venv"
-"$PROJECT_DIR/venv/bin/pip" install -q -r "$PROJECT_DIR/requirements.txt"
+uv venv "$PROJECT_DIR/.venv"
+uv pip install -q -p "$PROJECT_DIR/.venv" -r "$PROJECT_DIR/pyproject.toml"
 
 echo "Creating ProxyRumps.app..."
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
@@ -14,7 +14,7 @@ mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 cat > "$APP_DIR/Contents/MacOS/ProxyRumps" <<LAUNCHER
 #!/bin/bash
 cd "$PROJECT_DIR"
-exec "$PROJECT_DIR/venv/bin/python" "$PROJECT_DIR/socks_toggle.py"
+exec "$PROJECT_DIR/.venv/bin/python" "$PROJECT_DIR/app.py"
 LAUNCHER
 chmod +x "$APP_DIR/Contents/MacOS/ProxyRumps"
 
@@ -48,8 +48,8 @@ cat > "$PLIST_PATH" <<AGENT
     <string>dev.adw0rd.proxyrumps</string>
     <key>ProgramArguments</key>
     <array>
-        <string>$PROJECT_DIR/venv/bin/python</string>
-        <string>$PROJECT_DIR/socks_toggle.py</string>
+        <string>$PROJECT_DIR/.venv/bin/python</string>
+        <string>$PROJECT_DIR/app.py</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
