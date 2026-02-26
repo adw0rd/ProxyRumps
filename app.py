@@ -55,7 +55,8 @@ def fetch_ip_data():
 class SocksProxyApp(rumps.App):
     def __init__(self):
         self._toggle_item = rumps.MenuItem("...", callback=self._on_toggle)
-        super().__init__("⏳", quit_button="Reload")
+        icon = "🟢" if is_socks_enabled() else "🔴"
+        super().__init__(f"{icon} ...", quit_button="Reload")
         self.menu = [self._toggle_item, None]
         self._data = {}
         self._update_toggle_label()
@@ -67,11 +68,13 @@ class SocksProxyApp(rumps.App):
         else:
             self._toggle_item.title = "Enable Proxy"
 
+    def _status_icon(self):
+        return "🟢" if is_socks_enabled() else "🔴"
+
     def _update_title(self):
-        ip = self._data.get("ip", "...")
         country = self._data.get("country", "")
-        flag = country_to_flag(country) if country else ""
-        self.title = f"{flag} {ip}"
+        code = country.upper() if country else "..."
+        self.title = f"{self._status_icon()} {code}"
         self._update_toggle_label()
 
     def _fetch_ip(self):
@@ -84,7 +87,7 @@ class SocksProxyApp(rumps.App):
         currently_on = is_socks_enabled()
         set_socks(not currently_on)
         state_label = "ON" if not currently_on else "OFF"
-        self.title = "⏳"
+        self.title = f"{self._status_icon()} ..."
         self._update_toggle_label()
         rumps.notification("SOCKS Proxy", "", f"Proxy {state_label}")
         self._fetch_ip()
